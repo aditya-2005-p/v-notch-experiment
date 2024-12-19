@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Explore the coefficient of discharge for V-notches and rectangular notches with theoretical insights, experimental setup, and an interactive calculator.">
+    <title>Coefficient of Discharge of Notches</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Coefficient of Discharge of Notches</h1>
+        <nav>
+            <ul>
+                <li><a href="#home" aria-label="Navigate to Home section">Home</a></li>
+                <li><a href="#introduction" aria-label="Navigate to Introduction section">Introduction</a></li>
+                <li><a href="#experimental" aria-label="Navigate to Experimental section">Experimental</a></li>
+                <li><a href="#theory" aria-label="Navigate to Theory section">Theory</a></li>
+                <li><a href="#gallery" aria-label="Navigate to Gallery section">Gallery</a></li>
+                <li><a href="#calculator" aria-label="Navigate to Calculator section">Calculator</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <!-- Home Section -->
+        <section id="home">
+            <h2>Home</h2>
+            <p>Welcome to the Coefficient of Discharge of Notches website. Learn about V-notches and rectangular
+                notches, their theoretical background, experimental setups, and explore a gallery of related images.</p>
+        </section>
+
+        <!-- Introduction Section -->
+        <section id="introduction">
+            <h2>Introduction</h2>
+            <p>The coefficient of discharge (Cd) is a dimensionless number that represents the ratio of the actual
+                discharge to the theoretical discharge through a notch.</p>
+        </section>
+
+        <!-- Experimental Setup Section -->
+        <section id="experimental">
+            <h2>Experimental Setup</h2>
+            <p>Details about the experimental setup used to measure the coefficient of discharge:</p>
+            <ul>
+                <li>Equipment: Flow meter, notch tank, measuring devices, etc.</li>
+                <li>Procedure: Steps to conduct the experiment.</li>
+            </ul>
+        </section>
+
+        <!-- Theory Section -->
+        <section id="theory">
+            <h2>Theory</h2>
+            <p>The theoretical background of the coefficient of discharge, including fluid mechanics derivations and
+                assumptions.</p>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery">
+            <h2>Gallery</h2>
+            <p>Images related to V-notches and rectangular notches:</p>
+            <img src="1.jpeg"
+                alt="V-Notch" />
+            <img src="3.jpg"
+                alt="Rectangular Notch" />
+        </section>
+
+        <!-- Formulas Section -->
+        <section id="formulas">
+            <h2>Formulas</h2>
+            <p>For a V-notch: <strong>Q = (8/15) * Cd * H^(5/2)</strong></p>
+            <p>For a Rectangular notch: <strong>Q = (2/3) * Cd * L * H^(3/2)</strong></p>
+        </section>
+
+        <!-- Calculator Section -->
+        <section id="calculator">
+            <h2>Coefficient of Discharge Calculator</h2>
+            <label for="type">Select Notch Type:</label>
+            <select id="type" aria-label="Select type of notch" onchange="toggleInputFields()">
+                <option value="v-notch">V-Notch</option>
+                <option value="rectangular-notch">Rectangular Notch</option>
+            </select>
+
+            <label for="actual-discharge">Actual Discharge (Q<sub>actual</sub>):</label>
+            <input type="number" id="actual-discharge" placeholder="Enter actual discharge in m³/s" aria-label="Enter actual discharge in cubic meters per second">
+
+            <label for="height">Height (H):</label>
+            <input type="number" id="height" placeholder="Enter height in meters" aria-label="Enter height in meters">
+
+            <label for="width" id="width-label" style="display:none;">Width (L):</label>
+            <input type="number" id="width" placeholder="Enter width in meters" style="display:none;" aria-label="Enter width in meters">
+
+            <label for="angle" id="angle-label" style="display:none;">Angle (θ):</label>
+            <input type="number" id="angle" placeholder="Enter angle in degrees" style="display:none;" aria-label="Enter angle in degrees">
+
+            <button onclick="calculateCd()">Calculate Cd</button>
+
+        
+
+            <!-- Answer Section -->
+            <section id="answer">
+                <h3>Result</h3>
+                <p id="result" aria-live="polite"></p>
+            </section>
+        </section>
+    </main>
+    <footer>
+        <p>References: Fluid Mechanics Textbooks, Engineering Resources</p>
+    </footer>
+
+    
+    <script>
+        function toggleInputFields() {
+            const type = document.getElementById("type").value;
+            const widthLabel = document.getElementById("width-label");
+            const widthInput = document.getElementById("width");
+
+            if (type === "rectangular-notch") {
+                widthLabel.style.display = "inline";
+                widthInput.style.display = "inline";
+            } else {
+                widthLabel.style.display = "none";
+                widthInput.style.display = "none";
+            }
+        }
+
+        function calculateCd() {
+            const type = document.getElementById("type").value;
+            const actualDischarge = parseFloat(document.getElementById("actual-discharge").value);
+            const height = parseFloat(document.getElementById("height").value);
+            const width = parseFloat(document.getElementById("width").value);
+            let theoreticalDischarge, Cd;
+
+            if (type === "v-notch") {
+                theoreticalDischarge = (8 / 15) * Math.pow(height, 2.5);
+            } else if (type === "rectangular-notch") {
+                theoreticalDischarge = (2 / 3) * width * Math.pow(height, 1.5);
+            }
+
+            Cd = actualDischarge / theoreticalDischarge;
+
+            document.getElementById("result").textContent = `The Coefficient of Discharge (Cd) is ${Cd.toFixed(4)}`;
+        }
+    </script>
+</body>
+
+</html>
